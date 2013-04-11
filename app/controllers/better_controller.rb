@@ -5,6 +5,10 @@ class BetterController < ApplicationController
   #  text me to ask how it went
   #  display results on a page
 
+  # FIX OAUTH
+  #   doesn't seem to return access_token to redirect_uri
+  #   use cookies for user instead of query string param
+
   OAUTH_URI = 'https://foursquare.com/oauth2/authenticate?client_id=%s&response_type=code&redirect_uri=%s/redirect/%s'
   ACCESS_TOKEN_URI = 'https://foursquare.com/oauth2/access_token?client_id=%s&client_secret=%s&grant_type=authorization_code&redirect_uri=%s/redirect/%s&code=%s' 
 
