@@ -1,3 +1,3 @@
 Animal::Application.routes.draw do
-  resources :profile
+  resources :profile, :better
 end
