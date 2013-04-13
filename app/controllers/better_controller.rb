@@ -45,16 +45,12 @@ class BetterController < ApplicationController
 
   def foursquare_checkin
     unless params['checkin'].nil?
-
       checkin_data = JSON.parse params['checkin']
-      puts checkin_data['venue']
-
-      categories = params['checkin']['venue']['categories']
-      categories.each do |cat|
+      checkin_data['venue']['categories'].each do |cat|
         if cat['name'] == 'Gym'
-          checkin = FoursquareCheckin.new(:foursquare_user_id => params['checkin']['user']['id'],
-                                          :venue_id => params['checkin']['venue']['id'],
-                                          :venue_name => params['checkin']['venue']['name'],
+          checkin = FoursquareCheckin.new(:foursquare_user_id => checkin_data['user']['id'],
+                                          :venue_id => checkin_data['venue']['id'],
+                                          :venue_name => checkin_data['venue']['name'],
                                           :category_name => cat['name'])
           checkin.save!
           send_sms(user.phone_number) 
