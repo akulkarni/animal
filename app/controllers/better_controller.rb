@@ -115,7 +115,7 @@ class BetterController < ApplicationController
   FOURSQUARE_API_SELF = 'https://api.foursquare.com/v2/users/self?oauth_token=%s'
   def get_foursquare_user(access_token)
     response = Typhoeus.get(FOURSQUARE_API_SELF % access_token)
-    return JSON.parse(response.body)['response']['body']
+    return JSON.parse(response.body)['response']['user']
   end
 
   def save_to_cookies(key, value)
