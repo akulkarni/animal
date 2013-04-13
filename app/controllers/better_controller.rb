@@ -45,6 +45,7 @@ class BetterController < ApplicationController
   end
 
   def foursquare_checkin
+    render :text => 'OK'
   end
 
   def send_sms(phone_number)
