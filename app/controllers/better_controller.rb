@@ -35,17 +35,18 @@ class BetterController < ApplicationController
   def redirect
     username = params['username']
     code = params['code']
-    access_token = params['access_token']
 
-    if access_token.nil?
-      access_token_uri = ACCESS_TOKEN_URI % [ENV['FOURSQUARE_BETTER_CLIENT_ID'], ENV['FOURSQUARE_BETTER_CLIENT_SECRET'], ENV['BETTER_HOST'], username, code]
-      puts access_token_uri
-      redirect_to access_token_uri
-    else
+    access_token_uri = ACCESS_TOKEN_URI % [ENV['FOURSQUARE_BETTER_CLIENT_ID'], ENV['FOURSQUARE_BETTER_CLIENT_SECRET'], ENV['BETTER_HOST'], username, code]
+    puts access_token_uri
+
+    response = Typhoeus.get(access_token_uri)
+    access_token = response['access_token']
+    unless access_token.nil?
       user = FoursquareUser.new(:username => username.downcase, :access_token => access_token)
       user.save!
       redirect_to '%s/index?username=%s' % [ENV['BETTER_HOST'], username]
+    else
+      render :text => 'something bad happened.'
     end
   end
-    
 end
