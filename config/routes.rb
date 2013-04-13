@@ -1,5 +1,4 @@
 Animal::Application.routes.draw do
-  match 'better/redirect/:username' => 'better#redirect'
-
+  match 'better/redirect' => 'better#redirect'
   resources :profile, :better
 end
