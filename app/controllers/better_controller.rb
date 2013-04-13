@@ -40,7 +40,7 @@ class BetterController < ApplicationController
     puts access_token_uri
 
     response = Typhoeus.get(access_token_uri)
-    access_token = response['access_token']
+    access_token = JSON.parse(response.body)['access_token']
     unless access_token.nil?
       user = FoursquareUser.new(:username => username.downcase, :access_token => access_token)
       user.save!
