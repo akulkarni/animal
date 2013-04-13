@@ -17,7 +17,6 @@ class BetterController < ApplicationController
       user = FoursquareUser.where(:username => username.downcase).last 
       unless user.nil?
         # do shit here.
-        send_sms(user.phone_number) 
         render :text => 'O-KAY!'
       else
         render :text => 'Please register first.'
@@ -45,6 +44,19 @@ class BetterController < ApplicationController
   end
 
   def foursquare_checkin
+    unless params['checkin'].nil?
+      params['checkin']['venue']['categories'].each do |cat|
+        if cat['name'] == 'Gym'
+          checkin = FoursquareCheckin.new(:foursquare_user_id => params['checkin']['user']['id'],
+                                          :venue_id => params['checkin']['venue']['id'],
+                                          :venue_name => params['checkin']['venue']['name'],
+                                          :category_name => cat['name'])
+          checkin.save!
+          send_sms(user.phone_number) 
+          break
+        end
+      end
+    end
     render :text => 'OK'
   end
 
@@ -87,14 +99,23 @@ class BetterController < ApplicationController
     phone_number = load_from_cookies(:phone_number)
 
     unless access_token.nil? or username.nil?
+      foursquare_user = get_foursquare_user(access_token)
       user = FoursquareUser.new(:username => username.downcase, 
                                 :phone_number => phone_number, 
+                                :name => foursquare_user['firstName'],
+                                :foursquare_user_id => foursquare_user['id'],
                                 :access_token => access_token)
       user.save!
       redirect_to ENV['BETTER_HOST']
     else
       render :text => 'something bad happened.'
     end
+  end
+
+  FOURSQUARE_API_SELF = 'https://api.foursquare.com/v2/users/self?oauth_token=%s'
+  def get_foursquare_user(access_token)
+    response = Typhoeus.get(FOURSQUARE_API_SELF % access_token)
+    return JSON.parse(response.body)['response']['body']
   end
 
   def save_to_cookies(key, value)
