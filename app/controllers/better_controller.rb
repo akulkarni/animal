@@ -53,7 +53,9 @@ class BetterController < ApplicationController
                                           :venue_name => checkin_data['venue']['name'],
                                           :category_name => cat['name'])
           checkin.save!
-          send_sms(user.phone_number) 
+
+          user = FoursquareUser.where(:foursquare_user_id => checkin_data['user']['id']).last
+          send_sms(user.phone_number) unless user.nil?
           break
         end
       end
