@@ -44,6 +44,9 @@ class BetterController < ApplicationController
     end
   end
 
+  def foursquare_checkin
+  end
+
   def send_sms(phone_number)
     client = get_twilio_client
     client.account.sms.messages.create(:from => '+19123883779',
@@ -60,6 +63,8 @@ class BetterController < ApplicationController
       log = WorkoutLog.new(:user_id => user.id, :feedback => sms_body)
       log.save!
     end
+
+    render :text => 'OK'
   end
 
   def get_twilio_client
