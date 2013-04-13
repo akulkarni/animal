@@ -46,7 +46,8 @@ class BetterController < ApplicationController
   def foursquare_checkin
     unless params['checkin'].nil?
 
-      puts params['checkin']['venue']
+      checkin_data = JSON.parse params['checkin']
+      puts checkin_data['venue']
 
       categories = params['checkin']['venue']['categories']
       categories.each do |cat|
