@@ -51,7 +51,7 @@ class BetterController < ApplicationController
           checkin = FoursquareCheckin.new(:foursquare_user_id => checkin_data['user']['id'],
                                           :venue_id => checkin_data['venue']['id'],
                                           :venue_name => checkin_data['venue']['name'],
-                                          :category_name => cat['name'])
+                                          :category => cat['name'])
           checkin.save!
 
           user = FoursquareUser.where(:foursquare_user_id => checkin_data['user']['id']).last
