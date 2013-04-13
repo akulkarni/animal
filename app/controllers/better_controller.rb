@@ -45,6 +45,9 @@ class BetterController < ApplicationController
 
   def foursquare_checkin
     unless params['checkin'].nil?
+
+      puts params['checkin']['venue']
+
       categories = params['checkin']['venue']['categories']
       categories.each do |cat|
         if cat['name'] == 'Gym'
