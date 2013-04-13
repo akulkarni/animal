@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130411114305) do
+ActiveRecord::Schema.define(:version => 20130413212428) do
 
   create_table "foursquare_users", :force => true do |t|
     t.string   "username"
@@ -19,6 +19,14 @@ ActiveRecord::Schema.define(:version => 20130411114305) do
     t.string   "access_token"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.string   "phone_number"
+  end
+
+  create_table "workout_logs", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "feedback"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end
