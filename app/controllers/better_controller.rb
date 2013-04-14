@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class BetterController < ApplicationController
 
   # TODO
@@ -55,7 +57,7 @@ class BetterController < ApplicationController
           checkin.save!
 
           user = FoursquareUser.where(:foursquare_user_id => checkin_data['user']['id']).last
-          send_sms(user.phone_number) unless user.nil?
+          send_sms(user.phone_number, "Nice workout. How did it go?") unless user.nil?
           break
         end
       end
@@ -63,11 +65,21 @@ class BetterController < ApplicationController
     render :text => 'OK'
   end
 
-  def send_sms(phone_number)
-    client = get_twilio_client
-    client.account.sms.messages.create(:from => '+19123883779',
-                                        :to => phone_number,
-                                        :body => 'Nice workout. How did it go?')
+  def workout_of_the_day
+    today = get_posted_workout
+    yesterday = Workout.last
+    
+    if yesterday.nil? or today[:raw] != yesterday.raw
+      workout = Workout.new(:raw => today[:raw], :html => today[:html])
+      workout.save!
+
+      users = FoursquareUser.all
+      users.each do |u|
+        send_sms(u.phone_number, today[:raw])
+      end
+    end
+
+    render :text => today[:html]
   end
 
   def receive_sms
@@ -81,6 +93,34 @@ class BetterController < ApplicationController
     end
 
     render :text => 'OK'
+  end
+
+  private
+
+  def send_sms(phone_number, text)
+    client = get_twilio_client
+    client.account.sms.messages.create(:from => '+19123883779',
+                                        :to => phone_number,
+                                        :body => text[0...160])
+  end
+
+  def get_posted_workout
+    doc = Nokogiri::HTML(open("http://www.crossfitvirtuosity.com"))
+    raw = doc.to_str
+    raw = raw.split("Workout of the Day")[2]
+    raw = raw[0...raw.index("Today's Other Workouts")]
+    raw.gsub!("\t", "")
+    raw.gsub!("Metcon", "\r\n\r\nMetcon") unless raw.index("Metcon").nil?
+
+    html = raw.clone
+    html.gsub!("\r\n", "<br>")
+    html.gsub!("Warm up", "<b>Warm up</b>") unless html.index("Warm up").nil?
+    html.gsub!("Metcon", "<b>Metcon</b>") unless html.index("Metcon").nil?
+
+    return { 
+      raw: raw,
+      html: html
+    }
   end
 
   def get_twilio_client

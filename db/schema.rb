@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130413223701) do
+ActiveRecord::Schema.define(:version => 20130414133634) do
 
   create_table "foursquare_checkins", :force => true do |t|
     t.string   "foursquare_user_id"
@@ -35,6 +35,13 @@ ActiveRecord::Schema.define(:version => 20130413223701) do
   create_table "workout_logs", :force => true do |t|
     t.integer  "user_id"
     t.string   "feedback"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "workouts", :force => true do |t|
+    t.string   "raw"
+    t.string   "html"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
