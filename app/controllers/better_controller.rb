@@ -107,15 +107,23 @@ class BetterController < ApplicationController
   def get_posted_workout
     doc = Nokogiri::HTML(open("http://www.crossfitvirtuosity.com"))
     raw = doc.to_str
-    raw = raw.split("Workout of the Day")[2]
-    raw = raw[0...raw.index("Today's Other Workouts")]
+
+    ladies_night = raw.index("Ladies' Night")
+    unless ladies_night.nil?
+      raw = raw[raw.index("Ladies' Night")...raw.index("Today's Other Workouts")]
+      raw.gsub!("Ladies' Night", "Ladies' Night\r\n")
+    else
+      raw = raw.split("Workout of the Day")[2]
+      raw = raw[0...raw.index("Today's Other Workouts")]
+    end
+
     raw.gsub!("\t", "")
-    raw.gsub!("Metcon", "\r\n\r\nMetcon") unless raw.index("Metcon").nil?
+    raw.gsub!("Metcon", "\r\n\r\nMetcon") 
 
     html = raw.clone
     html.gsub!("\r\n", "<br>")
-    html.gsub!("Warm up", "<b>Warm up</b>") unless html.index("Warm up").nil?
-    html.gsub!("Metcon", "<b>Metcon</b>") unless html.index("Metcon").nil?
+    html.gsub!("Warm up", "<b>Warm up</b>") 
+    html.gsub!("Metcon", "<b>Metcon</b>") 
 
     return { 
       raw: raw,
