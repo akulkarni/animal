@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130414133634) do
+ActiveRecord::Schema.define(:version => 20130418031426) do
 
   create_table "foursquare_checkins", :force => true do |t|
     t.string   "foursquare_user_id"
@@ -40,10 +40,11 @@ ActiveRecord::Schema.define(:version => 20130414133634) do
   end
 
   create_table "workouts", :force => true do |t|
-    t.string   "raw"
-    t.string   "html"
+    t.text     "raw"
+    t.text     "html"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "date"
   end
 
 end
