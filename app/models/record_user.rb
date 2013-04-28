@@ -3,6 +3,7 @@ class RecordUser < ActiveRecord::Base
 
   def add_record(message)
     user_id = read_attribute(:id)
+    puts 'user_id ' + user_id
     unless user_id.nil?
       latest_question = DailyQuestion.last
       record = DailyRecord.new(:user_id => user_id,
