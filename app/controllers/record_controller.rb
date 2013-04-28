@@ -8,7 +8,7 @@ class RecordController < ApplicationController
 
   # TODO
   # Register page, endpoint, store salted passwords
-  # Set up rake task, scheduler
+  # Set up scheduler
   # Encrypt, decrypt messages?
 
   def send_nudge
@@ -30,7 +30,7 @@ class RecordController < ApplicationController
     sms_body = params['Body']
     phone_number = params['From']
 
-    user = RecordUsers.where(:phone_number => phone_number).last unless phone_number.nil?
+    user = RecordUser.where(:phone_number => phone_number).last unless phone_number.nil?
     user.add_record(sms_body) unless user.nil?
 
     render :text => 'OK'
