@@ -7,7 +7,7 @@ class RecordUser < ActiveRecord::Base
       latest_question = DailyQuestion.last
       record = DailyRecord.new(:user_id => user_id,
                                :message => message,
-                               :question_message => lastest_question.message)
+                               :question_message => latest_question.message)
       record.save! 
     end
   end
