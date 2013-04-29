@@ -1,6 +1,7 @@
 class RecordUser < ActiveRecord::Base
   attr_accessible :email, :name, :phone_number, :username, :password
   attr_accessor :password
+  attr_reader :password_hash
   validates :email, :uniqueness => true
   before_save :encrypt_password
 
@@ -22,12 +23,10 @@ class RecordUser < ActiveRecord::Base
 
   def add_record(message)
     user_id = read_attribute(:id)
-    puts 'user_id: %s' % user_id
     unless user_id.nil?
       latest_question = DailyQuestion.last
-      puts latest_question.as_json
       record = DailyRecord.new(:user_id => user_id,
-                               :message => message,
+                               :plaintext_message => message,
                                :question_message => latest_question.message)
       record.save! 
     end

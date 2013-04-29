@@ -7,8 +7,14 @@ class RecordController < ApplicationController
   # Also display messages on a page (?)
 
   # TODO
-  # Register page, endpoint, store salted passwords
+  # Store salted passwords
   # Encrypt, decrypt messages?
+
+  def index
+#    user = RecordUser.find_by_email('ajay@acoustik.org')
+#    user.add_record('heyo!')
+    render :text => 'OK'
+  end
 
   def signup
   end
@@ -53,7 +59,7 @@ class RecordController < ApplicationController
 
     render :text => 'OK'
   end
-  
+
   def receive_sms
     sms_body = params['Body']
     phone_number = params['From']
