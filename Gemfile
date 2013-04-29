@@ -7,6 +7,7 @@ gem 'haml', '>= 2.2.0'
 gem 'typhoeus'
 gem 'twilio-ruby'
 gem 'nokogiri'
+gem "bcrypt-ruby", :require => "bcrypt"
 
 # Gems used only for assets and not required
 # in production environments by default.

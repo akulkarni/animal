@@ -8,8 +8,36 @@ class RecordController < ApplicationController
 
   # TODO
   # Register page, endpoint, store salted passwords
-  # Set up scheduler
   # Encrypt, decrypt messages?
+
+  def signup
+  end
+
+  def register
+    name = params['name']
+    email = params['email']
+    phone_number = params['phone_number']
+    password = params['password']
+
+    unless name.blank? or email.blank? or phone_number.blank? or password.blank?
+      user = RecordUser.new(:name => name,
+                            :email => email,
+                            :phone_number => '+%s' % phone_number,
+                            :password => password)
+      user.save
+      # do something
+      response = 'SUCCESS!'
+    else
+      response = "Something's missing."
+    end
+
+    render :text => response
+  end
+
+  def login
+    user = RecordUser.authenticate('ajayx@acoustik.org', 'ballsx')
+    render :json => user
+  end
 
   def send_nudge
     question = DailyQuestion.where("date(created_at) = '%s'" % Date.today.to_s).last
