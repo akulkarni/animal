@@ -4,24 +4,22 @@ class DailyRecord < ActiveRecord::Base
   before_save :encrypt_message
 
   def encrypt_message
-    user = RecordUser.find_by_id(self.user_id)
-    if user
-#      puts 'hash: %s' % user.password_hash
-#      encryptor = ActiveSupport::MessageEncryptor.new(user.password_hash)
-#      self.message = encryptor.encrypt_and_sign(plaintext_message)
-#      puts encryptor.encrypt_and_sign(plaintext_message)
-      self.message = plaintext_message
-    end
+    encryptor = get_encryptor
+    self.message = encryptor.encrypt_and_sign(plaintext_message) if encryptor
   end
 
   def decrypt_message
+    encryptor = get_encryptor
+    self.plaintext_message = encryptor.decrypt_and_verify(self.message) if encryptor
+  end
+
+  def get_encryptor
     user = RecordUser.find_by_id(self.user_id)
     if user
-      encryptor = ActiveSupport::MessageEncryptor.new(user.password_hash)
-      return encryptor.decrypt_and_verify(self.message)
+      secret = Digest::SHA1.hexdigest(user.password_hash)
+      return ActiveSupport::MessageEncryptor.new(secret)
     else
       return nil
     end
-  end                                                
-
+  end
 end

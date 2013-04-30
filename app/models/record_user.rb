@@ -1,7 +1,6 @@
 class RecordUser < ActiveRecord::Base
   attr_accessible :email, :name, :phone_number, :username, :password
   attr_accessor :password
-  attr_reader :password_hash
   validates :email, :uniqueness => true
   before_save :encrypt_password
 

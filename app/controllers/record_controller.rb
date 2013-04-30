@@ -7,12 +7,11 @@ class RecordController < ApplicationController
   # Also display messages on a page (?)
 
   # TODO
-  # Store salted passwords
-  # Encrypt, decrypt messages?
+  # Have random string of messages to choose from
+  # Send welcome text and first message to user on registration
+  # Allow user to see their encrypted and decrypted messages on web
 
   def index
-#    user = RecordUser.find_by_email('ajay@acoustik.org')
-#    user.add_record('heyo!')
     render :text => 'OK'
   end
 
@@ -31,7 +30,7 @@ class RecordController < ApplicationController
                             :phone_number => '+%s' % phone_number,
                             :password => password)
       user.save
-      # do something
+      # do something, text user?
       response = 'SUCCESS!'
     else
       response = "Something's missing."
