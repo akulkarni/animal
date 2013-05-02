@@ -7,6 +7,19 @@ class DailyQuestion < ActiveRecord::Base
   end
   
   def get_random_question
-    return "Ok, let's hear it."
+    return QUESTIONS.sample
   end
+
+  QUESTIONS = ["Ok, let's hear it.",
+               "How'd it go today?",
+               "Imagine today was a color. What color would it be?",
+               "What are you up to? Like, RIGHT NOW.",
+               "Good day?",
+               "You have fun today?",
+               "Spill it.",
+               "Today: good, bad, or ugly?",
+               "If you were to relive today, what would you do differently?",
+               "What's up?"
+              ]
+
 end

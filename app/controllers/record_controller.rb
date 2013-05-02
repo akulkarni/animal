@@ -45,7 +45,7 @@ class RecordController < ApplicationController
   end
 
   def send_nudge
-    question = DailyQuestion.where("date(created_at) = '%s'" % Date.today.to_s).last
+    question = DailyQuestion.where("date(created_at) = '%s'" % DateTime.now.to_time.utc.to_s).last
     if question.nil?
       question = DailyQuestion.new
       question.save!
