@@ -7,8 +7,8 @@ class RecordController < ApplicationController
   # Also display messages on a page (?)
 
   # TODO
-  # Send welcome text and first message to user on registration
   # Allow user to see their encrypted and decrypted messages on web
+  # Send Sunday morning reflection email
 
   def index
     render :text => 'OK'
