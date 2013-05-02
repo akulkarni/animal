@@ -5,7 +5,7 @@ Animal::Application.routes.draw do
   match 'better/foursquare_checkin' => 'better#foursquare_checkin'
   match 'better/workout_of_the_day' => 'better#workout_of_the_day'
 
-  match 'record/send_nudge' => 'record#send_nudge'
+  match 'record/send_nudge' => 'record#send_nudge_to_all_users'
   match 'record/receive_sms' => 'record#receive_sms'
   match 'record/login' => 'record#login'
   match 'record/signup' => 'record#signup'

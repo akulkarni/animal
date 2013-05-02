@@ -7,7 +7,6 @@ class RecordController < ApplicationController
   # Also display messages on a page (?)
 
   # TODO
-  # Have random string of messages to choose from
   # Send welcome text and first message to user on registration
   # Allow user to see their encrypted and decrypted messages on web
 
@@ -30,7 +29,10 @@ class RecordController < ApplicationController
                             :phone_number => '+%s' % phone_number,
                             :password => password)
       user.save
-      # do something, text user?
+      if user
+        send_welcome_sms(user)
+        send_nudge([user])
+      end
       response = 'SUCCESS!'
     else
       response = "Something's missing."
@@ -44,18 +46,8 @@ class RecordController < ApplicationController
     render :json => user
   end
 
-  def send_nudge
-    question = DailyQuestion.where("date(created_at) = '%s'" % DateTime.now.to_time.utc.to_s).last
-    if question.nil?
-      question = DailyQuestion.new
-      question.save!
-    end
-    
-    users = RecordUser.all
-    users.each do |u|
-      send_sms(u.phone_number, question.message)
-    end
-
+  def send_nudge_to_all_users
+    send_nudge(RecordUser.all)
     render :text => 'OK'
   end
 
@@ -69,11 +61,28 @@ class RecordController < ApplicationController
     render :text => 'OK'
   end
 
+  def send_nudge(users)
+    question = DailyQuestion.where("date(created_at) = '%s'" % DateTime.now.to_time.utc.to_s).last
+    if question.nil?
+      question = DailyQuestion.new
+      question.save!
+    end
+    
+    users.each do |u|
+      send_sms(u.phone_number, question.message)
+    end
+  end
+
   def send_sms(phone_number, text)
     client = get_twilio_client
     client.account.sms.messages.create(:from => ENV['RECORD_TWILIO_NUMBER'],
                                        :to => phone_number,
                                        :body => text[0...160])
+  end
+
+  WELCOME_MESSAGE = "Hi, %s! Welcome to Record, your private daily diary. You'll hear from us once a day. Want to unsubscribe? Uh, awkward... Let's just get started."
+  def send_welcome_sms(user)
+    send_sms(user.phone_number, WELCOME_MESSAGE % user.name)
   end
 
   def get_twilio_client
