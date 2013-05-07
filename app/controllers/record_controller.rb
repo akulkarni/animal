@@ -67,6 +67,11 @@ class RecordController < ApplicationController
     render :text => 'OK'
   end
 
+  def send_nudge_to_ajay
+    send_nudge([RecordUser.find_by_email('ajay@acoustik.org')], false)
+    render :text => 'OK'
+  end
+
   def receive_sms
     sms_body = params['Body']
     phone_number = params['From']
