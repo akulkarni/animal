@@ -1,6 +1,7 @@
 %h2= 'Hi ' + @user.name + ','
 %p Here's what you recorded this past week.
 
+%hr
 - current_question = ''
 - @records.each do |r|
   %i= r.created_at

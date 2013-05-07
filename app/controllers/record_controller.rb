@@ -54,7 +54,6 @@ class RecordController < ApplicationController
     password = params['password']
     email = params['email']
     if password and email
-      puts '**%s, %s**' % [email, password]
       @user = RecordUser.authenticate(email, password)
       @records = DailyRecord.find_all_by_user_id(@user.id) if @user
     end
