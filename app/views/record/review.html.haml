@@ -1,0 +1,14 @@
+%h2= 'Hi ' + @user.name + ','
+%p Here's what you recorded this past week.
+
+- current_question = ''
+- @records.each do |r|
+  %i= r.created_at
+  - if r.question_message != current_question
+    %p
+      %b= r.question_message
+    - current_question = r.question_message
+  - r.decrypt_message
+  %p= r.plaintext_message
+  %hr
+

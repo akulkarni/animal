@@ -8,7 +8,9 @@ class RecordController < ApplicationController
 
   # TODO
   # Allow user to see their encrypted and decrypted messages on web
-  # Send Sunday morning reflection email
+  # Make it look pretty
+  # Send Sunday morning reflection email/sms (heroku scheduler?)
+
 
   def index
     render :text => 'OK'
@@ -42,12 +44,26 @@ class RecordController < ApplicationController
   end
 
   def login
-    user = RecordUser.authenticate('ajayx@acoustik.org', 'ballsx')
-    render :json => user
+    user_id = params['user_id']
+    @user = RecordUser.find_by_id(user_id) if user_id
+
+    render :text => "Something's missing." if user_id.nil? or @user.nil?
+  end
+
+  def review
+    password = params['password']
+    email = params['email']
+    if password and email
+      puts '**%s, %s**' % [email, password]
+      @user = RecordUser.authenticate(email, password)
+      @records = DailyRecord.find_all_by_user_id(@user.id) if @user
+    end
+
+    render :json => "Sorry, try again." if @user.nil?
   end
 
   def send_nudge_to_all_users
-    send_nudge(RecordUser.all)
+    send_nudge(RecordUser.all, false)
     render :text => 'OK'
   end
 
@@ -61,9 +77,14 @@ class RecordController < ApplicationController
     render :text => 'OK'
   end
 
-  def send_nudge(users)
-    question = DailyQuestion.where("date(created_at) = '%s'" % DateTime.now.to_time.utc.to_s).last
-    if question.nil?
+  def send_nudge(users, repeat_question)
+    if repeat_question
+      question = DailyQuestion.where("date(created_at) = '%s'" % DateTime.now.to_time.utc.to_s).last
+      if question.nil?
+        question = DailyQuestion.new
+        question.save!
+      end
+    else
       question = DailyQuestion.new
       question.save!
     end

@@ -7,7 +7,8 @@ Animal::Application.routes.draw do
 
   match 'record/send_nudge' => 'record#send_nudge_to_all_users'
   match 'record/receive_sms' => 'record#receive_sms'
-  match 'record/login' => 'record#login'
+  match 'record/:user_id/login' => 'record#login'
+  match 'record/review' => 'record#review'
   match 'record/signup' => 'record#signup'
   match 'record/register' => 'record#register'
   resources :profile, :better, :record
