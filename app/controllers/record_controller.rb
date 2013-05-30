@@ -8,7 +8,8 @@ class RecordController < ApplicationController
 
   # TODO
   # Allow user to see their encrypted and decrypted messages on web
-  # Make it look pretty
+  # Clean up login/review routes
+  # Make it look pretty, especially on mobile use bootstrap? 
   # Send Sunday morning reflection email/sms (heroku scheduler?)
 
 
