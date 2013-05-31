@@ -10,6 +10,12 @@
   %a{:href => "http://mit.edu"}
     %i.icon-chevron-right
 
+%div
+  %label Name:
+  %input{:type => "text", "ng-model" => "yourName", "placeholder" => "Enter a name here"}
+  %hr
+  %h1 Hello {{yourName}}
+
 - @items = ['7AM', '8AM', '9AM', '10AM', '11AM', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm']
 
 - @items.each do |item|
