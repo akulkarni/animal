@@ -1,7 +1,8 @@
 App.controller 'DateCtrl', ['$scope', ($scope) ->
 
   dotw_names = new Array("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
-  $scope.hours = ['7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm']
+
+  $scope.hours = ['7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm']
 
   now = new Date
   now = new Date(now.getFullYear(), now.getMonth(), now.getDate())
@@ -44,5 +45,8 @@ App.controller 'DateCtrl', ['$scope', ($scope) ->
   $scope.prevDate = () ->
     now.setDate(now.getDate() - 1)
     $scope.today = format_date(now)
+
+  $scope.cancel_test = () ->
+    $scope.hours.push('BAM')
 
 ]

@@ -1,9 +1,11 @@
-.ping-head 
-  %a.btn.btn-left{:href => "http://mit.edu"} Sup
-  HAM
-  %a.btn.btn-right{:href => "http://mit.edu"} Fool
-
 %div{"ng-controller" => "DateCtrl"}
+
+  .ping-head 
+    %a.btn.btn-left{"ng-click" => "cancel_test()"} Cancel
+    HAM
+    %a.btn.btn-right{:href => "http://mit.edu"} Fool
+
+
   .ping-date
     %i.icon-backward{"ng-click" => "prevDate()"}
     %span.today {{today}}
