@@ -9,10 +9,10 @@
     %span.today {{today}}
     %i.icon-forward{"ng-click" => "nextDate()"}
 
-  .ping-time-row{"ng-repeat" => "time in times", 
-                 "ng-click" => "toggleTime(time)",
-                 "ng-class" => "{selected: getSelectedState(time)}"}
-    {{time}}
+  .ping-time-row{"ng-repeat" => "hour in hours", 
+                 "ng-click" => "toggleTime(hour)",
+                 "ng-class" => "{selected: getSelectedState(hour)}"}
+    {{hour}}
 
 
 
