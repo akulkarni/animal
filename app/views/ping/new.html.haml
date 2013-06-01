@@ -1,0 +1,18 @@
+.ping-head 
+  %a.btn.btn-left{:href => "http://mit.edu"} Sup
+  HAM
+  %a.btn.btn-right{:href => "http://mit.edu"} Fool
+
+.ping-date
+  %a{:href => "http://mit.edu"}
+    %i.icon-chevron-left
+  =@today
+  %a{:href => "http://mit.edu"}
+    %i.icon-chevron-right
+
+- @times.each do |item|
+  .ping-time-row
+    =item
+
+
+

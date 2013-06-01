@@ -1,0 +1,22 @@
+.ping-head 
+  %a.btn.btn-left{:href => "http://mit.edu"} Sup
+  HAM
+  %a.btn.btn-right{:href => "http://mit.edu"} Fool
+
+%div{"ng-controller" => "DateCtrl"}
+  .ping-date
+    %a{:href => "http://mit.edu"}
+      %i.icon-chevron-left
+    {{today}}
+    %a{:href => "http://mit.edu"}
+      %i.icon-chevron-right
+
+  .ping-time-row{"ng-repeat" => "time in times", 
+                 "ng-click" => "toggleTime(time)",
+                 "ng-class" => "{selected: getSelectedState(time)}"}
+    {{time}}
+
+
+
+
+

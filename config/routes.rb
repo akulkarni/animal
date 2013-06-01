@@ -12,5 +12,6 @@ Animal::Application.routes.draw do
   match 'record/review' => 'record#review'
   match 'record/signup' => 'record#signup'
   match 'record/register' => 'record#register'
-  resources :profile, :better, :record
+
+  resources :profile, :better, :record, :ping_api, :ping
 end

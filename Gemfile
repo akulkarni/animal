@@ -8,6 +8,7 @@ gem 'typhoeus'
 gem 'twilio-ruby'
 gem 'nokogiri'
 gem "bcrypt-ruby", :require => "bcrypt"
+gem "twitter-bootstrap-rails"
 
 # Gems used only for assets and not required
 # in production environments by default.
