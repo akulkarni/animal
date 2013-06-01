@@ -40,4 +40,6 @@
     border-bottom-width: 1px;
 }
 
-
+.selected {
+    background-color: #99ff00;
+}
