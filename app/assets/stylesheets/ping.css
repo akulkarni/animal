@@ -30,6 +30,15 @@
     text-align: center;
 }
 
+.ping-date i {
+    color: #0080ff;
+}
+
+span.today {
+    display: inline-block;    
+    width: 100px;
+}
+
 .ping-time-row {
     padding: 18px 0 4px 0;
     font-size: 16pt;

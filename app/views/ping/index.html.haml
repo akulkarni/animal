@@ -5,11 +5,9 @@
 
 %div{"ng-controller" => "DateCtrl"}
   .ping-date
-    %a{:href => "http://mit.edu"}
-      %i.icon-chevron-left
-    {{today}}
-    %a{:href => "http://mit.edu"}
-      %i.icon-chevron-right
+    %i.icon-backward{"ng-click" => "prevDate()"}
+    %span.today {{today}}
+    %i.icon-forward{"ng-click" => "nextDate()"}
 
   .ping-time-row{"ng-repeat" => "time in times", 
                  "ng-click" => "toggleTime(time)",
