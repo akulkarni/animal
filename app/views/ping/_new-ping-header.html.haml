@@ -1,0 +1,8 @@
+- show_next = false if local_assigns[:show_next].nil?
+
+.ping-new-head 
+  %a.btn.btn-left{:href => "http://mit.edu"} Sup
+  New Ping
+  - if (show_next)
+    %a.btn.btn-right{:href => "http://mit.edu"} Fool
+

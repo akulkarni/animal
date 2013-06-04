@@ -4,6 +4,10 @@ class PingController < ApplicationController
   end
 
   def new
+  	render "cats"
+  end
+ 
+  def hours
     render "hours"
   end
 

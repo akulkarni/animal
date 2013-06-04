@@ -1,0 +1,7 @@
+= render :partial => 'new-ping-header', :locals => {:show_next => false}
+
+%div{"ng-controller" => "CatsCtrl"}
+  .ping-cat-row{"ng-repeat" => "cat in cats", 
+				"ng-click" => "click(cat)", 
+				"ng-class" => "{selected: cat == selected_cat}"}
+    {{cat}}

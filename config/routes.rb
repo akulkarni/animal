@@ -14,6 +14,7 @@ Animal::Application.routes.draw do
   match 'record/register' => 'record#register'
 
   match 'ping/new' => 'ping#new'
+  match 'ping/hours' => 'ping#hours'
 
   resources :profile, :better, :record, :ping_api, :ping
 end

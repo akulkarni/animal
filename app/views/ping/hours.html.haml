@@ -1,10 +1,6 @@
+= render :partial => 'new-ping-header', :locals => {:show_next => true}
+
 %div{"ng-controller" => "HoursCtrl"}
-
-  .ping-head 
-    %a.btn.btn-left{"ng-click" => "cancel_test()"} Cancel
-    HAM
-    %a.btn.btn-right{:href => "http://mit.edu"} Fool
-
 
   .ping-date
     %i.icon-backward{"ng-click" => "prevDate()"}

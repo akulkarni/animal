@@ -2,7 +2,7 @@
 
 .navbar { margin-left: 0; margin-right: 0; }
 
-.ping-head{ 
+.ping-new-head{ 
     background-color: #000000; 
     color: #ffffff;
     font-size: 20pt;
@@ -48,6 +48,36 @@ span.today {
     border-bottom-style: solid;
     border-bottom-width: 1px;
 }
+
+.ping-cat-row {
+    padding: 18px 0 4px 0;
+    font-size: 18pt;
+    min-height: 38px;
+    text-align: center;
+    border-bottom-color: #ccc;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-right-color: #ccc;  
+    border-right-style: solid;
+    border-right-width: 1px;
+}
+
+.ping-cat-row.big {
+    width: 100%;
+    background: #99ff00;
+}
+
+.ping-cat-row.medium {
+    background: #ff9900;
+    width: 50%;
+    float: left;
+}
+
+.ping-cat-row.small {
+    width: 33%;
+    float: left;
+}
+
 
 .selected {
     background-color: #99ff00;
