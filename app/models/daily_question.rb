@@ -3,33 +3,35 @@ class DailyQuestion < ActiveRecord::Base
   before_create :add_message
 
   def add_message
-    write_attribute(:message, get_random_question)
+    write_attribute(:message, get_fresh_question)
   end
   
-  def get_random_question
-    return QUESTIONS.sample
+  def get_fresh_question
+    r = DailyQuestion.order("id DESC").limit(15).select(:message)
+    recent_questions = r.map { |q| q.message }
+    return (QUESTIONS - recent_questions).sample 
   end
 
-  QUESTIONS = ["Ok, let's hear it.",
-               "How'd it go today?",
+  QUESTIONS = [
                "Imagine today was a color. What color would it be?",
-               "What are you up to? Like, RIGHT NOW.",
-               "Good day?",
-               "You have fun today?",
-               "Spill it.",
                "Today: good, bad, or ugly?",
                "If you were to relive today, what would you do differently?",
-               "What's up?",
                "What was the most important thing you did today?",
                "What's your biggest regret of today?",
                "What conversation today do you remember the most?",
-               "Dude.",
-               "Hit me.",
-               "What's new?",
-               "Who's someone that's close to you, but with whom you haven't spoken in a while? Call them right now.",
-               "Are you happy?",
+               "Who's someone that's close to you, but with whom you haven't spoken in a while? Call them.",
+               "Are you happy? How do you know?",
                "What are you doing really poorly, that you could do better?",
-               "It's about that time."
+               "What would 21 year old you say about your life today?",
+               "30 years from now, when you look back on your life today, what would future you want to say to today you?",
+               "Whose life did you impact the most today?",
+               "Who had the most impact on your life today?",
+               "What was the last nice thing you did for someone else?",
+               "What do you value the most right now?",
+               "Who is the most important person in your life?",
+               "Where were you a year ago today? Where would you like to be a year from now?",
+               "If you could wish something nice for someone else, what would you wish for, and for whom?",
+               "What personal trait are you least happy about, want to improve?"
               ]
 
 end
